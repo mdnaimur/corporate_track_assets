@@ -18,6 +18,6 @@ This is python based django framework web app
 
 **running the server**
 
-'''' console
+'console
 python manage.py runserver
-''''  
+' 
