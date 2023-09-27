@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .forms import MyUserFrom
+from .forms import MyUserFrom, Poducts_Form, Employee_Form
+from .models import User, Product_Assets, Employee
 # Create your views here.
 
 
@@ -61,6 +63,48 @@ def loginUser(request):
     return render(request, 'base/login.html')
 
 
+#! logout user
+
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
+
+# def emoplyee_add
+@login_required(login_url='/login')
+def employee_add(request):
+    form = Employee_Form()
+    user = User.objects.all()
+
+    if request.method == 'POST':
+        form = Employee_Form(request.POST)
+        messages.error(request, form.errors)
+        if form.is_valid():
+            employee = Employee.objects.create(
+                host=request.user,
+                name=request.POST.get('name'),
+                designation=request.POST.get('designation'),
+                department=request.POST.get('department'),
+                phone_number=request.POST.get('phone_number')
+            )
+            return redirect('employee/employee_details')
+        else:
+            messages.error(
+                request, 'An error occured during employee registration"')
+
+    context = {"form": form}
+    return render(request, 'employee/employee_add.html', context)
+
+
+def employee_details(request):
+    employees = Employee.objects.all()
+    print('8888888', employees)
+    context = {'employees': employees}
+    return render(request, 'employee/employee_detail.html', context)
+
+
+# emoplyee add update
+
+# product addd
+# update
+# delete
