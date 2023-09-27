@@ -24,11 +24,11 @@ class Employee(models.Model):
 class Product_Assets(models.Model):
     user_host = models.ForeignKey(User, on_delete=models.CASCADE)
     employee_user = models.ManyToManyField(
-        Employee, blank=True)
+        Employee, blank=True, null=True)
     product_name = models.CharField(max_length=200, null=True)
-    given_date = models.DateTimeField(blank=True)
-    return_date = models.DateTimeField(blank=True)
-    stock = models.BooleanField(default=False)
+    given_date = models.DateField(blank=True, null=True)
+    return_date = models.DateField(blank=True, null=True)
+    stock = models.BooleanField(default=True)
 
     def __str__(self):
         return self.product_name

@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .forms import MyUserFrom, Poducts_Form, Employee_Form
+from .forms import MyUserFrom, Products_Form, Employee_Form
 from .models import User, Product_Assets, Employee
 # Create your views here.
 
@@ -87,7 +87,7 @@ def employee_add(request):
                 department=request.POST.get('department'),
                 phone_number=request.POST.get('phone_number')
             )
-            return redirect('employee/employee_details')
+            return redirect('employee_details')
         else:
             messages.error(
                 request, 'An error occured during employee registration"')
@@ -96,9 +96,9 @@ def employee_add(request):
     return render(request, 'employee/employee_add.html', context)
 
 
+@login_required(login_url='/login')
 def employee_details(request):
     employees = Employee.objects.all()
-    print('8888888', employees)
     context = {'employees': employees}
     return render(request, 'employee/employee_detail.html', context)
 
@@ -106,5 +106,38 @@ def employee_details(request):
 # emoplyee add update
 
 # product addd
-# update
+@login_required(login_url='/login')
+def add_product(request):
+    form = Products_Form()
+    if request.method == 'POST':
+        form = Products_Form(request.POST)
+        messages.error(request, form.errors)
+
+        if form.is_valid():
+            product = Product_Assets.objects.create(
+                user_host=request.user,
+                # employee_user=None,
+                product_name=request.POST.get('product_name'),
+                # given_date=None,
+                # return_date=None,
+                # stock=True
+            )
+            return redirect('home')
+        else:
+            messages.error(
+                request, 'An error occured during employee registration"')
+
+    context = {"form": form}
+    return render(request, 'product/add_product.html', context)
+
+
+# Detail Product
+@login_required(login_url='/login')
+def product_detail(request):
+    products = Product_Assets.objects.all()
+    context = {'products': products}
+    return render(request, 'product/product_view.html', context)
+
+
+# update Product
 # delete

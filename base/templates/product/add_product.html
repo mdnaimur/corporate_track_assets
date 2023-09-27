@@ -18,7 +18,7 @@
               ></path>
             </svg>
           </a>
-          <h3>Create Employee</h3>
+          <h3>Create Product List</h3>
         </div>
       </div>
       <div class="layout__body">
@@ -26,28 +26,9 @@
           {% csrf_token %}
 
           <div class="form__group">
-            <label for="employee_name">Employee Name</label>
-            {{form.name}}
+            <label for="product_name">Product Name</label>
+            {{form.product_name}}
           </div>
-          <div class="form__group">
-            <label for="designation">Designation</label>
-            {{form.designation}}
-          </div>
-          <div class="form__group">
-            <label for="department">Department</label>
-            {{form.department}}
-          </div>
-          <div class="form__group">
-            <label for="phone_number">Phone Number</label>
-            {{form.phone_number}}
-          </div>
-          <!--  {% for field in form %}
-          <div class="form__group">
-            <label for="room_name">{{field.label}}</label>
-            {{field}}
-             <input id="room_name" name="room_name" type="text" placeholder="E.g. Mastering Python + Django" /> 
-          </div>
-          {% endfor %}-->
 
           <div class="form__action">
             <a class="btn btn--dark" href="{% url 'home' %}">Cancel</a>
