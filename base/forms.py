@@ -12,10 +12,11 @@ class MyUserFrom(UserCreationForm):
         fields = ['name', 'username', 'email', 'password1', 'password2']
 
 
-class Poducts_Form(ModelForm):
+class Products_Form(ModelForm):
     class Meta:
         model = Product_Assets
         fields = '__all__'
+        exclude = ['user_host']
 
 
 class Employee_Form(ModelForm):

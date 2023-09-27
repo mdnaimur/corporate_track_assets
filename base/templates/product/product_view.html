@@ -35,7 +35,7 @@
         color: #fff;
       }
       tr {
-        color: white;
+        color: black;
       }
       tr:hover {
         cursor: pointer;
@@ -86,7 +86,7 @@
     <h2>Product Tracking Table</h2>
 
     <div class="button-container">
-      <a href="{% url 'employee-list' %}" class="btn1 btn--link"
+      <a href="{% url 'add_product' %}" class="btn1 btn--link"
         >Add Product Assets</a
       >
 
@@ -95,34 +95,48 @@
 
     <div class="table-container">
       <table>
-        <tr>
-          <th>ID</th>
-          <th>Product Name</th>
-          <th>Owner Name</th>
-          <th>Given Date</th>
-          <th>Return Date</th>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Product A</td>
-          <td>John Doe</td>
-          <td>2023-09-01</td>
-          <td>2023-09-15</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Product B</td>
-          <td>Jane Smith</td>
-          <td>2023-09-05</td>
-          <td>2023-09-20</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Product C</td>
-          <td>Bob Johnson</td>
-          <td>2023-09-10</td>
-          <td>2023-09-25</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Owned Name</th>
+            <th>Given Date</th>
+            <th>Return Date</th>
+            <th>Availability</th>
+          </tr>
+          <tr></tr>
+        </thead>
+
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td>{{ product.product_name }}</td>
+
+           <td>
+    {% if not product.employee_user.all %}
+        No One Received Yet
+    {% else %}
+        {% for owned in product.employee_user.all %}
+            {{ owned }}
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+</td>
+
+
+            <td>{{ product.given_date }}</td>
+            <td>{{ product.return_date }}</td>
+            <td>
+              {% if product.stock %} Product Available {% else %} Not Available
+              Now {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4">No Products found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
         <!-- Add more rows as needed -->
       </table>
     </div>
