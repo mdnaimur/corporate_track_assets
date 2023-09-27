@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Product Tracking</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+
+      h2 {
+        margin-top: 20px;
+      }
+
+      table {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 20px auto;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #999;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #333;
+        color: #fff;
+      }
+      tr {
+        color: white;
+      }
+      tr:hover {
+        cursor: pointer;
+        color: black;
+        background-color: #ddd;
+      }
+
+      .btn--link {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn--link :hover {
+        background-color: #0056b3;
+      }
+      a:link {
+        text-decoration: none;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      /* Center the buttons */
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        padding: 10px;
+      }
+      .btn1 {
+        margin-right: 45px;
+        background-color: #45411d;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+      h2 {
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Product Tracking Table</h2>
+
+    <div class="button-container">
+      <a href="{% url 'employee-list' %}" class="btn1 btn--link"
+        >Add Product Assets</a
+      >
+
+      <a href="{% url 'employee-list' %}" class="btn--link">View Employee</a>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Product Name</th>
+          <th>Owner Name</th>
+          <th>Given Date</th>
+          <th>Return Date</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Product A</td>
+          <td>John Doe</td>
+          <td>2023-09-01</td>
+          <td>2023-09-15</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Product B</td>
+          <td>Jane Smith</td>
+          <td>2023-09-05</td>
+          <td>2023-09-20</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Product C</td>
+          <td>Bob Johnson</td>
+          <td>2023-09-10</td>
+          <td>2023-09-25</td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </table>
+    </div>
+
+    <script>
+      let tablePosition = 0;
+
+      function moveTable(direction) {
+        const table = document.querySelector("table");
+        const maxScroll = table.scrollWidth - table.clientWidth;
+
+        tablePosition += direction * 100;
+
+        if (tablePosition < 0) {
+          tablePosition = 0;
+        } else if (tablePosition > maxScroll) {
+          tablePosition = maxScroll;
+        }
+
+        table.style.transform = `translateX(-${tablePosition}px)`;
+      }
+    </script>
+  </body>
+</html>
