@@ -24,7 +24,7 @@ class Employee(models.Model):
 class Product_Assets(models.Model):
     user_host = models.ForeignKey(User, on_delete=models.CASCADE)
     employee_user = models.ManyToManyField(
-        Employee, blank=True, null=True)
+        Employee, blank=True)
     product_name = models.CharField(max_length=200, null=True)
     given_date = models.DateField(blank=True, null=True)
     return_date = models.DateField(blank=True, null=True)

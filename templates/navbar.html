@@ -6,4 +6,25 @@
       <h1>Corporrate Assets Management</h1>
     </a>
   </div>
+  <nav class="header__menu">
+
+    <!-- Logged In -->
+    {% if request.user.is_authenticated %} <div class="header__user">
+      
+      <p>{{request.user.username}} <span>@{{request.user.username}}</span></p>
+         <a href="{% url 'logout' %}">
+               <img src="{% static 'images/avatar.svg' %}" />
+             <p>Logout</p>
+         </a>
+    </div>
+    {% else %}
+
+    <!-- Not Logged In -->
+    <a href="{% url 'login' %}">
+        <img src="{% static 'images/avatar.svg' %}" />
+        <p>Login</p>
+    </a>
+    {% endif %}
+
+</nav>
 </header>
