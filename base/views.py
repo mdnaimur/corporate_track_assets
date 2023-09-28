@@ -125,7 +125,7 @@ def add_product(request):
             return redirect('home')
         else:
             messages.error(
-                request, 'An error occured during employee registration"')
+                request, 'An error occured during employee registration')
 
     context = {"form": form}
     return render(request, 'product/add_product.html', context)
@@ -140,4 +140,33 @@ def product_detail(request):
 
 
 # update Product
-# delete
+@login_required(login_url='/login')
+def product_update(request, pk):
+    product = Product_Assets.objects.get(id=pk)
+    form = Products_Form(instance=product)
+    if request.user != product.user_host:
+        return HttpResponse('You are not allowed here.....')
+
+    if request.method == 'POST':
+        form = Products_Form(request.POST, instance=product)
+        form.save()
+        return redirect('home')
+    else:
+        messages.error(
+            request, 'An error occured during Product updated')
+
+    context = {'form': form}
+    return render(request, 'product/product_update.html', context)
+
+
+# Delete
+@login_required(login_url='/login')
+def deleteProduct(request, pk):
+    product = Product_Assets.objects.get(id=pk)
+    if request.user != product.user_host:
+        return HttpResponse('You are not allowed here..')
+
+    if request.method == 'POST':
+        product.delete()
+        return redirect('home')
+    return render(request, 'product/delete.html', {'obj': product})

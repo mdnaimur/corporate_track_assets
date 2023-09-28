@@ -1,3 +1,4 @@
+{% extends 'main.html' %} {% block content %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -35,7 +36,7 @@
         color: #fff;
       }
       tr {
-        color: black;
+        color: white;
       }
       tr:hover {
         cursor: pointer;
@@ -50,7 +51,23 @@
         border: none;
         cursor: pointer;
       }
+      .btn--link-update{
+        padding: 10px 20px;
+        background-color: #1ecbe1;
+        color: black;
+        border: none;
+        cursor: pointer;
 
+      }
+      .btn--link-delete{
+        padding: 10px 20px;
+        background-color: red;
+        margin-top:10px;
+        color: white;
+        border: none;
+        cursor: pointer;
+
+      }
       .btn--link :hover {
         background-color: #0056b3;
       }
@@ -102,15 +119,21 @@
             <th>Given Date</th>
             <th>Return Date</th>
             <th>Availability</th>
+            <th>Action</th>
           </tr>
           <tr></tr>
         </thead>
-
+       
+  
         <tbody>
+         
           {% for product in products %}
+          {% if product.user_host == request.user %} 
+          
+         
           <tr>
-            <td>{{ product.product_name }}</td>
-
+            <td> <a href="{% url 'product_update' product.id %}">{{ product.product_name }} </a></td>
+       
            <td>
     {% if not product.employee_user.all %}
         No One Received Yet
@@ -129,14 +152,29 @@
               {% if product.stock %} Product Available {% else %} Not Available
               Now {% endif %}
             </td>
+            <td>
+             
+                <a href="{% url 'product_update' product.id %}" class="btn--link-update"
+                  >Update</a
+                >
+          
+                <a href="{% url 'delete-product' product.id %}" class="btn--link-delete">Delete</a>
+             
+            </td>
           </tr>
+          {% endif %}
           {% empty %}
           <tr>
             <td colspan="4">No Products found.</td>
           </tr>
+        
           {% endfor %}
+          
         </tbody>
+      
+      </div>
 
+   
         <!-- Add more rows as needed -->
       </table>
     </div>
@@ -161,3 +199,4 @@
     </script>
   </body>
 </html>
+{% endblock content %}
