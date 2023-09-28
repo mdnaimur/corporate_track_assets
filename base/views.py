@@ -64,7 +64,6 @@ def loginUser(request):
 
 
 #! logout user
-
 def logoutUser(request):
     logout(request)
     return redirect('login')
